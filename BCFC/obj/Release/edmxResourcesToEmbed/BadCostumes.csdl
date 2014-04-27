@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BadCostumesModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="BadCostumesEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Costumes" EntityType="BadCostumesModel.Costume" />
+    <EntitySet Name="Participants" EntityType="BadCostumesModel.Participant" />
+    <AssociationSet Name="FK_ParticipantCostumes" Association="BadCostumesModel.FK_ParticipantCostumes">
+      <End Role="Participant" EntitySet="Participants" />
+      <End Role="Costume" EntitySet="Costumes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Costume">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Participant" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Votes" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ParticipantId" Type="Int32" Nullable="false" />
+    <Property Name="Image" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Participant1" Relationship="BadCostumesModel.FK_ParticipantCostumes" FromRole="Costume" ToRole="Participant" />
+  </EntityType>
+  <EntityType Name="Participant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Charity" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Motivation" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Image" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Costumes" Relationship="BadCostumesModel.FK_ParticipantCostumes" FromRole="Participant" ToRole="Costume" />
+  </EntityType>
+  <Association Name="FK_ParticipantCostumes">
+    <End Type="BadCostumesModel.Participant" Role="Participant" Multiplicity="1" />
+    <End Type="BadCostumesModel.Costume" Role="Costume" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Costume">
+        <PropertyRef Name="ParticipantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

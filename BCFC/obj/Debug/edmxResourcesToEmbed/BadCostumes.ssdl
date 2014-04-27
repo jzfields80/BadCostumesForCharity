@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BadCostumesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BadCostumesModelStoreContainer">
+    <EntitySet Name="Costumes" EntityType="BadCostumesModel.Store.Costumes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Participants" EntityType="BadCostumesModel.Store.Participants" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ParticipantCostumes" Association="BadCostumesModel.Store.FK_ParticipantCostumes">
+      <End Role="Participants" EntitySet="Participants" />
+      <End Role="Costumes" EntitySet="Costumes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Costumes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Participant" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Votes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ParticipantId" Type="int" Nullable="false" />
+    <Property Name="Image" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Participants">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Charity" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Motivation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Image" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ParticipantCostumes">
+    <End Role="Participants" Type="BadCostumesModel.Store.Participants" Multiplicity="1" />
+    <End Role="Costumes" Type="BadCostumesModel.Store.Costumes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participants">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Costumes">
+        <PropertyRef Name="ParticipantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
